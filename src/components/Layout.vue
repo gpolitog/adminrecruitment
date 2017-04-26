@@ -1,0 +1,163 @@
+<template>
+  <q-layout>
+    <div slot="header" class="toolbar">
+      <q-toolbar-title :padding="1">
+        Internship Admin Panel
+      </q-toolbar-title>
+      <p>
+        Logged in as {{name}}
+      </p>
+    </div>
+
+    <q-tabs slot="navigation">
+     <q-tab icon="view_day" route="/application" >Application</q-tab>
+     <q-tab icon="view_day" route="/meeting" >Meeting Schedule</q-tab>
+     <q-tab icon="view_day" route="/calldrop1" >Calldrop status 1</q-tab>
+     <q-tab icon="view_day" route="/calldrop2" >Calldrop status 2</q-tab>
+     <q-tab icon="view_day" route="/selected" >Selected</q-tab>
+     <q-tab icon="view_day" route="/waiting" >Waiting List</q-tab>
+     <q-tab icon="view_day" route="/rejected" >Rejected</q-tab>
+     <q-tab icon="view_day" route="/fake" >fake profile</q-tab>
+     <q-tab icon="view_day" route="/terminated" >Terminated</q-tab>
+     <q-tab icon="view_day" route="/all" >All</q-tab>
+    </q-tabs>
+
+    <q-modal ref="layoutModal" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+      <q-layout>
+        <div slot="header" class="toolbar">
+          <q-toolbar-title :padding="1">
+            Login/SignUp
+          </q-toolbar-title>
+        </div>
+        <div class="layout-view">
+          <div class="layout-padding">
+            <q-tabs slot="navigation" class="inverted orange">
+              <q-tab icon="view_day" @selected="val='1'">Sign Up</q-tab>
+              <q-tab icon="view_day" @selected="val='2'">Login In</q-tab>
+            </q-tabs>
+            <br /><br />
+            <div v-if="val === '1'">
+              <div class="floating-label">
+                <input required v-model="name" />
+                <label>Name</label>
+              </div>
+              <div class="floating-label">
+                <input required v-model="loginId" />
+                <label>Login ID</label>
+              </div>
+              <br /><br />
+              <div class="floating-label">
+                <input required v-model="password" />
+                <label>Password</label>
+              </div>
+              <br /><br />
+              <pre>                        <button class="primary" @click="OnSigned()">Sign Up</button></pre>
+            </div>
+            <div v-if="val === '2'">
+              <div class="floating-label">
+                <input required v-model="loginId" />
+                <label>Login ID</label>
+              </div>
+              <br /><br />
+              <div class="floating-label">
+                <input required v-model="password" />
+                <label>Password</label>
+              </div>
+              <br /><br />
+              <pre>                        <button class="primary" @click="OnLogged()">Login</button></pre>
+            </div>
+          </div>
+        </div>
+      </q-layout>
+    </q-modal>
+
+    <router-view class="layout-view"></router-view>
+
+    <div slot="footer" class="toolbar">
+      <div class="auto flex justify-center within-iframe-hide">
+        <button v-go-back="'/layout'">
+          <i class="on-left animate-blink">
+            replay
+          </i>
+          Back to Showcase
+        </button>
+      </div>
+      <q-toolbar-title :padding="0" class="within-iframe-only">
+        Footer
+      </q-toolbar-title>
+    </div>
+  </q-layout>
+</template>
+
+<script>
+import axios from 'axios'
+import {Dialog} from 'quasar'
+export default {
+  data () {
+    return {
+      val: '2',
+      loginId: '',
+      password: '',
+      name: ''
+    }
+  },
+  methods: {
+    OnSigned () {
+      var xyz = this
+      axios.post('http://localhost:9000/signin', {
+        name: this.name,
+        emailId: this.loginId,
+        password: this.password
+      })
+      .then(function (response) {
+        console.log(response)
+        if (response.data === 'data not allowed') {
+          Dialog.create({
+            title: 'Alert',
+            message: 'Login already exists'
+          })
+        }
+        else {
+          Dialog.create({
+            title: 'Alert',
+            message: 'Account created.Please login'
+          })
+          xyz.val = '2'
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    },
+    OnLogged () {
+      var xyz = this
+      axios.post('http://localhost:9000/remember', {
+        emailId: this.loginId,
+        password: this.password
+      })
+      .then(function (response) {
+        console.log(response)
+        if (response.data === 'login unsuccessful') {
+          Dialog.create({
+            title: 'Alert',
+            message: 'Login unsuccessful'
+          })
+        }
+        else {
+          xyz.$store.state.acl_current = response.data.permission
+          xyz.name = response.data.name
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      this.$refs.layoutModal.close()
+    }
+  },
+  mounted () {
+    if (this.$store.state.acl_current !== 'admin' || this.$store.state.acl_current !== 'any') {
+      this.$refs.layoutModal.open()
+    }
+  }
+}
+</script>
