@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="width:80%;float:left;">
-      <table style="margin-top: 30px;" class="q-table" :class="computedClasses">
+      <table style="margin-top: 30px;" class="q-table highlight striped-even">
         <thead>
           <tr>
             <th class="text-left"><pre></pre></th>
@@ -54,50 +54,7 @@ export default {
   data () {
     return {
       items: [],
-      checked: [],
-      styles: [
-        '',
-        'bordered',
-        'horizontal-delimiter',
-        'vertical-delimiter',
-        'cell-delimiter',
-        'striped-odd',
-        'striped-even',
-        'highlight',
-        'compact',
-        'loose',
-        'flipped'
-      ],
-      bordered: false,
-      highlight: false,
-      delimiter: 'none',
-      stripe: 'none',
-      type: 'none',
-      gutter: 'none'
-    }
-  },
-  computed: {
-    computedClasses () {
-      let classes = []
-      if (this.bordered) {
-        classes.push('bordered')
-      }
-      if (this.highlight) {
-        classes.push('highlight')
-      }
-      if (this.delimiter !== 'none') {
-        classes.push(this.delimiter + '-delimiter')
-      }
-      if (this.stripe !== 'none') {
-        classes.push('striped-' + this.stripe)
-      }
-      if (this.type !== 'none') {
-        classes.push(this.type)
-      }
-      if (this.gutter !== 'none') {
-        classes.push(this.gutter)
-      }
-      return classes
+      checked: []
     }
   },
   methods: {

@@ -12,7 +12,9 @@ import router from './router'
 // import store from './store'
 import VueAcl from 'vue-acl'
 import Vuex from 'vuex'
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 Vue.use(Quasar) // Install Quasar Framework
 
 Vue.use(Vuex)

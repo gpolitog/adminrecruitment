@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div style="width:80%;float:left;">
-      <table style="margin-top: 30px;" class="q-table" :class="computedClasses">
+    <div style="float:left;">
+      <pre>                                               <button class="primary" @click="OnScheduled()">Schedule Meeting</button>      <button class="primary" @click="OnCalled()">Call Again</button>     <button class="primary" @click="OnFaked()">Fake</button></pre>
+    </div>
+    <div style="float:left;">
+      <table class="q-table highlight striped-even">
         <thead>
           <tr>
             <th class="text-left"><pre></pre></th>
@@ -67,20 +70,13 @@
         </q-modal>
       </table>
     </div>
-    <div style="float:left;width:20%;">
-      <br /><br /><br />
-      <br /><br /><br />
-      <button class="primary" @click="OnScheduled()">Schedule Meeting</button>
-      <br /><br />
-      <button class="primary" @click="OnCalled()">Call Again</button>
-      <br /><br />
-      <button class="primary" @click="OnFaked()">Fake</button>
-    </div>
   </div>
 </template>
+
 <script>
+
 import axios from 'axios'
-import { Utils } from 'quasar'
+import { Utils, Dialog } from 'quasar'
 
 export default {
   data () {
@@ -183,150 +179,166 @@ export default {
       ],
       checked: [],
       items: [],
-      showeditems: [],
-      styles: [
-        '',
-        'bordered',
-        'horizontal-delimiter',
-        'vertical-delimiter',
-        'cell-delimiter',
-        'striped-odd',
-        'striped-even',
-        'highlight',
-        'compact',
-        'loose',
-        'flipped'
-      ],
-      bordered: false,
-      highlight: false,
-      delimiter: 'none',
-      stripe: 'none',
-      type: 'none',
-      gutter: 'none'
-    }
-  },
-  computed: {
-    computedClasses () {
-      let classes = []
-      if (this.bordered) {
-        classes.push('bordered')
-      }
-      if (this.highlight) {
-        classes.push('highlight')
-      }
-      if (this.delimiter !== 'none') {
-        classes.push(this.delimiter + '-delimiter')
-      }
-      if (this.stripe !== 'none') {
-        classes.push('striped-' + this.stripe)
-      }
-      if (this.type !== 'none') {
-        classes.push(this.type)
-      }
-      if (this.gutter !== 'none') {
-        classes.push(this.gutter)
-      }
-      return classes
+      showeditems: []
     }
   },
   methods: {
     OnScheduled () {
-      this.$refs.layoutModal.open()
+      for (var i = 1; i < 1000; i++) {
+        if (this.checked[i] === true) {
+          break
+        }
+      }
+      if (i === 1000) {
+        Dialog.create({
+          title: 'Alert',
+          message: 'No rows were selected'
+        })
+      }
+      else {
+        this.$refs.layoutModal.open()
+      }
     },
     OnColl () {
       if (this.college === 'College') {
-        this.showeditems = this.items
         this.college = ''
-        this.department = ''
-        this.degree = ''
-        this.district = ''
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.items})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
       else {
-        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.showeditems})
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
     },
     OnDept () {
       if (this.department === 'Department') {
-        this.showeditems = this.items
-        this.college = ''
         this.department = ''
-        this.degree = ''
-        this.district = ''
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
       else {
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
         this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
     },
     OnDeg () {
       if (this.degree === 'Degree') {
-        this.showeditems = this.items
-        this.college = ''
-        this.department = ''
         this.degree = ''
-        this.district = ''
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
       else {
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
         this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
     },
     OnDis () {
       if (this.district === 'District') {
-        this.showeditems = this.items
-        this.college = ''
-        this.department = ''
-        this.degree = ''
         this.district = ''
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
       else {
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
         this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
     },
     OnYear () {
       if (this.year === 'Year') {
-        this.showeditems = this.items
-        this.college = ''
-        this.department = ''
-        this.degree = ''
-        this.district = ''
         this.year = ''
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
       }
       else {
+        this.showeditems = Utils.filter(this.college, {field: 'college', list: this.items})
+        this.showeditems = Utils.filter(this.department, {field: 'department', list: this.showeditems})
+        this.showeditems = Utils.filter(this.degree, {field: 'degree', list: this.showeditems})
+        this.showeditems = Utils.filter(this.district, {field: 'district', list: this.showeditems})
         this.showeditems = Utils.filter(this.year, {field: 'year', list: this.showeditems})
       }
     },
     OnFaked () {
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/changestatus', {
-            id: i,
-            status: 'fake'
-          })
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+          break
+        }
+      }
+      if (i === 1000) {
+        Dialog.create({
+          title: 'Alert',
+          message: 'No rows were selected'
+        })
+      }
+      else {
+        for (i = 1; i < 1000; i++) {
+          if (this.checked[i] === true) {
+            axios.post('http://localhost:9000/changestatus', {
+              id: i,
+              status: 'fake'
+            })
+            .then(function (response) {
+              console.log(response)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+          }
         }
       }
     },
     OnCalled () {
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/changestatus', {
-            id: i,
-            status: 'calldrop1'
-          })
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+          break
+        }
+      }
+      if (i === 1000) {
+        Dialog.create({
+          title: 'Alert',
+          message: 'No rows were selected'
+        })
+      }
+      else {
+        for (i = 1; i < 1000; i++) {
+          if (this.checked[i] === true) {
+            axios.post('http://localhost:9000/changestatus', {
+              id: i,
+              status: 'calldrop1'
+            })
+            .then(function (response) {
+              console.log(response)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+          }
         }
       }
     },
     OnSubmitted () {
+      this.$refs.layoutModal.close()
       var myDate = new Date(this.datetime)
       console.log(myDate)
       var tempDate = myDate.toString()

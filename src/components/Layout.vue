@@ -5,7 +5,7 @@
         Internship Admin Panel
       </q-toolbar-title>
       <p>
-        Logged in as {{name}}
+        Logged in as {{form.name}}
       </p>
     </div>
 
@@ -22,7 +22,7 @@
      <q-tab icon="view_day" route="/all" >All</q-tab>
     </q-tabs>
 
-    <q-modal ref="layoutModal" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+    <q-modal ref="layoutModal" noBackdropDismiss noEscDismiss :content-css="{minWidth: '80vw', minHeight: '80vh'}">
       <q-layout>
         <div slot="header" class="toolbar">
           <q-toolbar-title :padding="1">
@@ -38,16 +38,16 @@
             <br /><br />
             <div v-if="val === '1'">
               <div class="floating-label">
-                <input required v-model="name" />
+                <input @input="$v.form.name.$touch()" :class="{'has-error': $v.form.name.$error}" required v-model="form.name" />
                 <label>Name</label>
               </div>
               <div class="floating-label">
-                <input required v-model="loginId" />
+                <input @input="$v.form.email.$touch()" :class="{'has-error': $v.form.email.$error}" required v-model="form.email" />
                 <label>Login ID</label>
               </div>
               <br /><br />
               <div class="floating-label">
-                <input required v-model="password" />
+                <input @input="$v.form.password.$touch()" :class="{'has-error': $v.form.password.$error}" required v-model="form.password" />
                 <label>Password</label>
               </div>
               <br /><br />
@@ -55,12 +55,12 @@
             </div>
             <div v-if="val === '2'">
               <div class="floating-label">
-                <input required v-model="loginId" />
+                <input @input="$v.form.email.$touch()" :class="{'has-error': $v.form.email.$error}" required v-model="form.email" />
                 <label>Login ID</label>
               </div>
               <br /><br />
               <div class="floating-label">
-                <input required v-model="password" />
+                <input @input="$v.form.password.$touch()" :class="{'has-error': $v.form.password.$error}" required v-model="form.password" />
                 <label>Password</label>
               </div>
               <br /><br />
@@ -75,11 +75,11 @@
 
     <div slot="footer" class="toolbar">
       <div class="auto flex justify-center within-iframe-hide">
-        <button v-go-back="'/layout'">
+        <button v-go-back="'/'">
           <i class="on-left animate-blink">
             replay
           </i>
-          Back to Showcase
+          Back to Home
         </button>
       </div>
       <q-toolbar-title :padding="0" class="within-iframe-only">
@@ -90,24 +90,32 @@
 </template>
 
 <script>
+import { required, email, minLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
-import {Dialog} from 'quasar'
+import {Dialog, Toast} from 'quasar'
 export default {
   data () {
     return {
       val: '2',
-      loginId: '',
-      password: '',
-      name: ''
+      form: {
+        name: '',
+        password: '',
+        email: ''
+      }
     }
   },
   methods: {
     OnSigned () {
+      this.$v.form.$touch()
+      if (this.$v.form.$error) {
+        Toast.create('Please review fields again.')
+        return
+      }
       var xyz = this
       axios.post('http://localhost:9000/signin', {
-        name: this.name,
-        emailId: this.loginId,
-        password: this.password
+        name: this.form.name,
+        emailId: this.form.email,
+        password: this.form.password
       })
       .then(function (response) {
         console.log(response)
@@ -132,8 +140,8 @@ export default {
     OnLogged () {
       var xyz = this
       axios.post('http://localhost:9000/remember', {
-        emailId: this.loginId,
-        password: this.password
+        emailId: this.form.email,
+        password: this.form.password
       })
       .then(function (response) {
         console.log(response)
@@ -145,13 +153,20 @@ export default {
         }
         else {
           xyz.$store.state.acl_current = response.data.permission
-          xyz.name = response.data.name
+          xyz.form.name = response.data.name
         }
       })
       .catch(function (error) {
         console.log(error)
       })
       this.$refs.layoutModal.close()
+    }
+  },
+  validations: {
+    form: {
+      email: { required, email },
+      password: { required, minLength: minLength(6) },
+      name: { required, minLength: minLength(4) }
     }
   },
   mounted () {
