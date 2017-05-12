@@ -1,0 +1,11 @@
+{
+ "name": "networktool",
+ "version": "1.0.0",
+ "description": "personalblog",
+ "author": "himanshu",
+ "private": true,
+ "scripts": {
+   "postinstall": "npm install express"
+ }
+}
+
