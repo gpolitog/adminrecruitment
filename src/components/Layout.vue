@@ -22,15 +22,16 @@
      <q-tab icon="view_day" route="/all" >All</q-tab>
     </q-tabs>
 
-    <q-modal ref="layoutModal" noBackdropDismiss noEscDismiss :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+    <q-modal ref="layoutModal" noBackdropDismiss noEscDismiss :content-css="{minWidth: '20vw', minHeight: '45vh'}">
       <q-layout>
         <div slot="header" class="toolbar">
           <q-toolbar-title :padding="1">
-            Login/SignUp
+            Login
           </q-toolbar-title>
         </div>
         <div class="layout-view">
-          <div class="layout-padding">
+          <div class>
+            <!--
             <q-tabs slot="navigation" class="inverted orange">
               <q-tab icon="view_day" @selected="val='1'">Sign Up</q-tab>
               <q-tab icon="view_day" @selected="val='2'">Login In</q-tab>
@@ -53,7 +54,8 @@
               <br /><br />
               <pre>                        <button class="primary" @click="OnSigned()">Sign Up</button></pre>
             </div>
-            <div v-if="val === '2'">
+          -->
+            <div style = "padding-top:0.5cm;padding-left:1cm" v-if="val === '2'">
               <div class="floating-label">
                 <input @input="$v.form.email.$touch()" :class="{'has-error': $v.form.email.$error}" required v-model="form.email" />
                 <label>Login ID</label>
@@ -63,8 +65,7 @@
                 <input @input="$v.form.password.$touch()" :class="{'has-error': $v.form.password.$error}" required v-model="form.password" />
                 <label>Password</label>
               </div>
-              <br /><br />
-              <pre>                        <button class="primary" @click="OnLogged()">Login</button></pre>
+              <pre>            <button class="primary" @click="OnLogged()">Login</button></pre>
             </div>
           </div>
         </div>
