@@ -45,7 +45,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/terminated')
+    axios.get('https://recruitmentserver.herokuapp.com/terminated')
       .then(function (response) {
         var r
         console.log(response)

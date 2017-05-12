@@ -104,7 +104,7 @@ export default {
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
           if (this.terminate === true) {
-            axios.post('http://localhost:9000/changestatus', {
+            axios.post('https://recruitmentserver.herokuapp.com/changestatus', {
               id: i,
               status: 'terminated'
             })
@@ -122,7 +122,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/selected')
+    axios.get('https://recruitmentserver.herokuapp.com/selected')
       .then(function (response) {
         var r
         console.log(response)

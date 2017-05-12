@@ -61,7 +61,7 @@ export default {
     OnClear () {
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/clear', {
+          axios.post('https://recruitmentserver.herokuapp.com/clear', {
             id: i
           })
           .then(function (response) {
@@ -76,7 +76,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/fake')
+    axios.get('https://recruitmentserver.herokuapp.com/fake')
       .then(function (response) {
         var r
         console.log(response)

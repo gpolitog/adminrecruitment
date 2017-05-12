@@ -113,7 +113,7 @@ export default {
         return
       }
       var xyz = this
-      axios.post('http://localhost:9000/signin', {
+      axios.post('https://recruitmentserver.herokuapp.com/signin', {
         name: this.form.name,
         emailId: this.form.email,
         password: this.form.password
@@ -140,7 +140,7 @@ export default {
     },
     OnLogged () {
       var xyz = this
-      axios.post('http://localhost:9000/remember', {
+      axios.post('https://recruitmentserver.herokuapp.com/remember', {
         emailId: this.form.email,
         password: this.form.password
       })

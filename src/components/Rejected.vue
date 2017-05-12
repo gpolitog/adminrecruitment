@@ -70,7 +70,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/rejected')
+    axios.get('https://recruitmentserver.herokuapp.com/rejected')
       .then(function (response) {
         var r
         console.log(response)

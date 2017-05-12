@@ -98,7 +98,7 @@ export default {
     OnRejected () {
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/changestatus', {
+          axios.post('https://recruitmentserver.herokuapp.com/changestatus', {
             id: i,
             status: 'rejected'
           })
@@ -121,7 +121,7 @@ export default {
       console.log(time)
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/scheduled', {
+          axios.post('https://recruitmentserver.herokuapp.com/scheduled', {
             id: i,
             status: 'meeting',
             date: array[2],
@@ -144,7 +144,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/calldrop2')
+    axios.get('https://recruitmentserver.herokuapp.com/calldrop2')
       .then(function (response) {
         var r
         console.log(response)

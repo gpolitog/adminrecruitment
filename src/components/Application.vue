@@ -347,7 +347,7 @@ export default {
       console.log(time)
       for (var i = 1; i < 1000; i++) {
         if (this.checked[i] === true) {
-          axios.post('http://localhost:9000/scheduled', {
+          axios.post('https://recruitmentserver.herokuapp.com/scheduled', {
             id: i,
             status: 'meeting',
             date: array[2],
@@ -370,7 +370,7 @@ export default {
   },
   mounted () {
     var xyz = this
-    axios.get('http://localhost:9000/applied')
+    axios.get('https://recruitmentserver.herokuapp.com/applied')
       .then(function (response) {
         var r
         console.log(response)
