@@ -175,7 +175,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.acl_current !== 'admin' || this.$store.state.acl_current !== 'any') {
+    if (!this.$session.exists()) {
       this.$refs.layoutModal.open()
     }
   }
