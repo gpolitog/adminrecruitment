@@ -4,7 +4,7 @@
       <q-toolbar-title :padding="1">
         Internship Admin Panel
       </q-toolbar-title>
-      <button class="round small orange" @click="Logout()">
+      <button class="round small" @click="Logout()">
         Logout
       </button>
       <p>
