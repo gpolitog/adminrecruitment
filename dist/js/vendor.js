@@ -1831,7 +1831,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(131)("./" + name);
+            __webpack_require__(132)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4466,7 +4466,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(135)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(136)(module)))
 
 /***/ }),
 /* 1 */
@@ -11297,7 +11297,7 @@ setTimeout(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = (Vue$2);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(125)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(126)))
 
 /***/ }),
 /* 2 */
@@ -11311,7 +11311,7 @@ setTimeout(function () {
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var moment = _interopDefault(__webpack_require__(0));
-var FastClick = _interopDefault(__webpack_require__(130));
+var FastClick = _interopDefault(__webpack_require__(131));
 
 function getUserAgent() {
   return (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
@@ -31649,6 +31649,77 @@ Acl.install = function (Vue, { router, d_permission, store }) {
 /***/ }),
 /* 121 */,
 /* 122 */
+/***/ (function(module, exports) {
+
+const setAll = function (all){
+  window.sessionStorage.setItem(VueSession.key,JSON.stringify(all));
+}
+
+const VueSession = {
+  key: 'vue-session-key',
+  install(Vue, options) {
+    Vue.prototype.$session = {
+      getAll: function(){
+        var all = JSON.parse(window.sessionStorage.getItem(VueSession.key));
+        return all || {};
+      },
+      set: function(key,value){
+        if(key == 'session-id') return false;
+        var all = this.getAll();
+
+        if(!('session-id' in all)){
+          this.init();
+          all = this.getAll();
+        }
+
+        all[key] = value;
+
+        setAll(all);
+      },
+      get: function(key){
+        var all = this.getAll();
+        return all[key];
+      },
+      start: function(){
+        var all = this.getAll();
+        all['session-id'] = 'sess:'+Date.now();
+
+        setAll(all);
+      },
+      exists: function(){
+        var all = this.getAll();
+        return 'session-id' in all;
+      },
+      has: function(key){
+        var all = this.getAll();
+        return key in all;
+      },
+      remove: function(key){
+        var all = this.getAll();
+        delete all[key];
+
+        setAll(all);
+      },
+      clear: function(){
+        var all = this.getAll();
+
+        setAll({'session-id': all['session-id']});
+      },
+      destroy: function(){
+        setAll({});
+      },
+      id: function(){
+        return this.get('session-id');
+      }
+    }
+  },
+};
+
+module.exports = VueSession;
+
+
+/***/ }),
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31661,7 +31732,7 @@ exports.withParams = exports.validationMixin = exports.Vuelidate = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _params = __webpack_require__(126);
+var _params = __webpack_require__(127);
 
 var buildFromKeys = function buildFromKeys(keys, fn, keyFn) {
   return keys.reduce(function (build, key) {
@@ -32177,7 +32248,7 @@ exports.withParams = _params.withParams;
 exports.default = Vuelidate;
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32990,7 +33061,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports) {
 
 module.exports = function normalizeComponent (
@@ -33044,7 +33115,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports) {
 
 var g;
@@ -33071,7 +33142,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33160,10 +33231,10 @@ function withParams(paramsOrClosure, maybeValidator) {
 }
 
 /***/ }),
-/* 127 */,
 /* 128 */,
 /* 129 */,
-/* 130 */
+/* 130 */,
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;;(function () {
@@ -34011,9 +34082,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;;(function () {
 
 
 /***/ }),
-/* 131 */,
 /* 132 */,
-/* 133 */
+/* 133 */,
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36422,7 +36493,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports) {
 
 /**
@@ -36455,7 +36526,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -36483,8 +36554,8 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 136 */,
-/* 137 */
+/* 137 */,
+/* 138 */
 /***/ (function(module, exports) {
 
 /*
@@ -36540,7 +36611,6 @@ module.exports = function() {
 
 
 /***/ }),
-/* 138 */,
 /* 139 */,
 /* 140 */,
 /* 141 */,
@@ -36552,7 +36622,8 @@ module.exports = function() {
 /* 147 */,
 /* 148 */,
 /* 149 */,
-/* 150 */
+/* 150 */,
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -36571,7 +36642,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(134)
+var listToStyles = __webpack_require__(135)
 
 /*
 type StyleObject = {

@@ -13,6 +13,9 @@ import router from './router'
 import VueAcl from 'vue-acl'
 import Vuex from 'vuex'
 import Vuelidate from 'vuelidate'
+import VueSession from 'vue-session'
+
+Vue.use(VueSession)
 
 Vue.use(Vuelidate)
 Vue.use(Quasar) // Install Quasar Framework

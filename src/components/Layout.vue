@@ -154,6 +154,9 @@ export default {
           })
         }
         else {
+          xyz.$session.start()
+          xyz.$session.set('jwt', response.body.token)
+          xyz.$router.push('/application')
           xyz.$store.state.acl_current = response.data.permission
           xyz.form.name = response.data.name
         }
