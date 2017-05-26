@@ -147,11 +147,11 @@ export default {
       .then(function (response) {
         console.log(response)
         if (response.data === 'login unsuccessful') {
+          xyz.$refs.layoutModal.open()
           Dialog.create({
             title: 'Alert',
             message: 'Login unsuccessful'
           })
-          xyz.$refs.layoutModal.open()
         }
         else {
           xyz.$store.state.acl_current = response.data.permission
