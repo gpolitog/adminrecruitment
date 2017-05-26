@@ -1,8 +1,8 @@
 {
- "name": "admin",
+ "name": "blog",
  "version": "1.0.0",
  "description": "personalblog",
- "author": "himanshu",
+ "author": "Awesome Author",
  "private": true,
  "scripts": {
    "postinstall": "npm install express"
