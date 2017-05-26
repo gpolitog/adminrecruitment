@@ -4,6 +4,8 @@
       <q-toolbar-title :padding="1">
         Internship Admin Panel
       </q-toolbar-title>
+      <q-fab classNames="orange" icon="keyboard_arrow_down" direction="down">
+      <q-small-fab class="white" @click.native="Logout()" icon="mail"></q-small-fab>
       <p>
         Logged in as {{form.name}}
       </p>
@@ -154,17 +156,20 @@ export default {
           })
         }
         else {
-          xyz.$session.start()
-          xyz.$session.set('jwt', response.body.token)
-          xyz.$router.push('/application')
           xyz.$store.state.acl_current = response.data.permission
           xyz.form.name = response.data.name
+          xyz.$session.start()
+          xyz.$router.push('/application')
         }
       })
       .catch(function (error) {
         console.log(error)
       })
       this.$refs.layoutModal.close()
+    },
+    Logout () {
+      this.$session.destroy()
+      this.$router.push('/')
     }
   },
   validations: {
