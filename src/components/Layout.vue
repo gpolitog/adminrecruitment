@@ -93,7 +93,7 @@
 <script>
 import { required, email, minLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
-import {Dialog, /*Toast*/} from 'quasar'
+import {Dialog} from 'quasar'
 export default {
   data () {
     return {
