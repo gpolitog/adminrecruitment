@@ -25,7 +25,7 @@ export default new VueRouter({
       component: load('Layout'),
       meta: { permission: 'any', fail: '/error' },
       children: [
-       {path: '/all', component: load('All'), meta: { permission: 'any', fail: '/error' }},
+       {path: '/all', component: load('All'), meta: { permission: 'admin', fail: '/error' }},
        {path: '/application', component: load('Application'), meta: { permission: 'any', fail: '/error' }},
        {path: '/meeting', component: load('MeetingScheduled'), meta: { permission: 'any', fail: '/error' }},
        {path: '/calldrop1', component: load('CallDrop1'), meta: { permission: 'any', fail: '/error' }},
