@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    OnSigned () {
+    /*OnSigned () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
         Toast.create('Please review fields again.')
@@ -137,7 +137,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    },
+    },*/
     OnLogged () {
       var xyz = this
       axios.post('https://recruitmentserver.herokuapp.com/remember', {
@@ -151,6 +151,7 @@ export default {
             title: 'Alert',
             message: 'Login unsuccessful'
           })
+          xyz.$refs.layoutModal.open()
         }
         else {
           xyz.$store.state.acl_current = response.data.permission
