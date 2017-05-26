@@ -4,8 +4,9 @@
       <q-toolbar-title :padding="1">
         Internship Admin Panel
       </q-toolbar-title>
-      <q-fab classNames="orange" icon="keyboard_arrow_down" direction="down">
-      <q-small-fab class="white" @click.native="Logout()" icon="mail"></q-small-fab>
+      <button class="round small" @click="clickMethod()">
+        Logout
+      </button>
       <p>
         Logged in as {{form.name}}
       </p>
