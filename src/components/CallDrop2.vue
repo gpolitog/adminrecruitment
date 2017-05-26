@@ -143,6 +143,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$session.exists()) {
+      this.$router.push('/')
+    }
     var xyz = this
     axios.get('https://recruitmentserver.herokuapp.com/calldrop2')
       .then(function (response) {
