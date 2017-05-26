@@ -93,7 +93,7 @@
 <script>
 import { required, email, minLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
-import {Dialog, Toast} from 'quasar'
+import {Dialog, /*Toast*/} from 'quasar'
 export default {
   data () {
     return {
@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    /*OnSigned () {
+    /* OnSigned () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
         Toast.create('Please review fields again.')
@@ -137,7 +137,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
-    },*/
+    }, */
     OnLogged () {
       var xyz = this
       axios.post('https://recruitmentserver.herokuapp.com/remember', {
