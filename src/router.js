@@ -34,7 +34,8 @@ export default new VueRouter({
        {path: '/selected', component: load('Selected'), meta: { permission: 'any', fail: '/error' }},
        {path: '/waiting', component: load('Waiting'), meta: { permission: 'any', fail: '/error' }},
        {path: '/terminated', component: load('Terminated'), meta: { permission: 'any', fail: '/error' }},
-       {path: '/rejected', component: load('Rejected'), meta: { permission: 'any', fail: '/error' }}
+       {path: '/rejected', component: load('Rejected'), meta: { permission: 'any', fail: '/error' }},
+       {path: '/college', component: load('College'), meta: { permission: 'any', fail: '/error' }}
       ]
     },
    { path: '*', component: load('Error404'), meta: { permission: 'any', fail: '/error' } }

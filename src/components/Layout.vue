@@ -1,6 +1,9 @@
 <template>
   <q-layout>
     <div slot="header" class="toolbar">
+      <button class="hide-on-drawer-visible" @click="$refs.leftDrawer.open()">
+        <i>menu</i>
+      </button>
       <q-toolbar-title :padding="1">
         Internship Admin Panel
       </q-toolbar-title>
@@ -24,6 +27,20 @@
      <q-tab icon="view_day" route="/terminated" >Terminated</q-tab>
      <q-tab icon="view_day" route="/all" >All</q-tab>
     </q-tabs>
+
+    <q-drawer ref="leftDrawer">
+      <div class="toolbar light">
+        <q-toolbar-title :padding="1">
+            Drawer
+        </q-toolbar-title>
+      </div>
+
+      <div class="list no-border platform-delimiter">
+        <q-drawer-link icon="view_quilt" to="/college" exact>
+          Add college
+        </q-drawer-link>
+      </div>
+    </q-drawer>
 
     <q-modal ref="layoutModal" noBackdropDismiss noEscDismiss :content-css="{minWidth: '20vw', minHeight: '45vh'}">
       <q-layout>
